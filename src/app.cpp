@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-#include <stdlib.h>
+#include <GL/glew.h>
 #include <GL/glfw.h>
 
 #include "app.h"
@@ -15,8 +15,6 @@ CApp::CApp(void) : m_bRunning(true) {
 CApp::~CApp(void) {
 	// Close window and terminate GLFW
 	glfwTerminate();
-	// Exit program
-	exit(EXIT_SUCCESS);
 }
 
 CApp& CApp::instance(void) {
@@ -24,28 +22,40 @@ CApp& CApp::instance(void) {
     return *ptr;
 }
 
-bool CApp::initialize(std::string title, int width, int height, bool fullscreen) {
+bool CApp::initialize(const char* title, int width, int height, bool fullscreen) {
 	// Try to initialize OpenGL
 	if (!glfwInit()) {
 		std::cout << "Unable to initialize OpenGL!" << std::endl;
-		exit(EXIT_FAILURE);
+		return false;
 	}
-	
+	// Setup GLFW Profile
+	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
+	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
+	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 3);
+	glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// Try to open the window
 	int mode = fullscreen ? GLFW_FULLSCREEN : GLFW_WINDOW;
-	if (!glfwOpenWindow(width, height, 0, 0, 0, 0, 0, 0, mode))	{
+	if (!glfwOpenWindow(width, height, 0, 0, 0, 0, 32, 0, mode))	{
 		std::cout << "Unable to open window!" << std::endl;
 		glfwTerminate();
-		exit(EXIT_FAILURE);
+		return false;
 	}
-	glfwSetWindowTitle(title.c_str());
-
+	glfwSetWindowTitle(title);
+	// Try to initialize GLEW
+	glewExperimental = GL_TRUE; 
+	if (glewInit() != GLEW_OK) {
+		std::cout << "Failed to initialize GLEW!" << std::endl;
+		return false;
+	}
+	// Enable sticky keys for capturing
+	glfwEnable(GLFW_STICKY_KEYS);
 	// Try to initialize the Renderer
 	if (!Renderer.initialize()) {
 		std::cout << "Unable to initialize Renderer!" << std::endl;
 		glfwTerminate();
-		exit(EXIT_FAILURE);
+		return false;
 	}
+
 
 	// Callbacks
 	glfwSetWindowSizeCallback(resize);
@@ -60,6 +70,7 @@ bool CApp::isRunning(void) const {
 bool CApp::run(void) {
 	// Check if ESC key was pressed or window was closed
 	m_bRunning = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
+	Renderer.render();
 	return m_bRunning;
 }
 

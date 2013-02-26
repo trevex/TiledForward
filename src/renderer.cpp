@@ -40,3 +40,8 @@ void CRenderer::resize(float width, float height) {
 	glLoadIdentity();
 }
 
+void CRenderer::render(void) {
+	glfwSwapBuffers();
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+

@@ -12,6 +12,7 @@ public:
 
 	bool initialize(void);
 	void resize(float width, float height);
+	void render(void);
 protected:
 private:
 };

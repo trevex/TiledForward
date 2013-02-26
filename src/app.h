@@ -12,7 +12,7 @@ public:
 
 	static CApp& instance(void);
 
-	bool initialize(std::string title, int width = 800, int height = 600, bool fullscreen = false);
+	bool initialize(const char* title, int width = 800, int height = 600, bool fullscreen = false);
 	bool isRunning(void) const;
 	bool run(void);
 protected:
