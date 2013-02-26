@@ -103,3 +103,8 @@ bool CShader::link(GLuint &vert, GLuint &frag) {
 	}
 	return true;
 }
+
+
+GLuint CShader::getUniform(const char* name) {
+	return glGetUniformLocation(m_program, name);
+}

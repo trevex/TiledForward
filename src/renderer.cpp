@@ -17,16 +17,8 @@ CRenderer& CRenderer::instance(void) {
 }
 
 bool CRenderer::initialize(void) {
-	// Initialize OpenGL state machine
-	glShadeModel(GL_SMOOTH);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-	glClearDepth(1.0f); 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_COLOR_MATERIAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	glMatrixMode(GL_MODELVIEW);
+	glDepthFunc(GL_LESS); 
 
 
 	return true;
@@ -42,6 +34,6 @@ void CRenderer::resize(float width, float height) {
 
 void CRenderer::render(void) {
 	glfwSwapBuffers();
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

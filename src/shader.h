@@ -11,6 +11,7 @@ public:
 
 	bool load(const char* vertFile, const char* fragFile);
 	void use(void);
+	GLuint getUniform(const char* name);
 protected:
 private:
 	bool compile(GLuint &id, std::string &src);

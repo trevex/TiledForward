@@ -2,8 +2,8 @@ CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 ifneq "$(findstring win, $(MAKECMDGOALS))" ""
-LD_FLAGS := -static-libstdc++ -static-libgcc -lglew32 -lglfw -lopengl32 -lglu32
-CC_FLAGS := -g -std=c++0x
+LD_FLAGS := -static-libstdc++ -static-libgcc -static -lglew32 -lglfw -lopengl32 -lglu32
+CC_FLAGS := -DGLEW_STATIC -std=c++0x
 CC := x86_64-w64-mingw32-g++
 EXECUTABLE := procedural.exe
 else
@@ -15,7 +15,7 @@ endif
 
 unix: $(EXECUTABLE)
 
-win: clean $(EXECUTABLE)
+win: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJ_FILES)
 	$(CC) -o $@ $^ $(LD_FLAGS) 
