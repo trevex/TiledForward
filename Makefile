@@ -3,12 +3,12 @@ OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 ifneq "$(findstring win, $(MAKECMDGOALS))" ""
 LD_FLAGS := -static-libstdc++ -static-libgcc -lglfw -lopengl32 -lglu32
-CC_FLAGS := -g
+CC_FLAGS := -g -std=c++0x
 CC := x86_64-w64-mingw32-g++
 EXECUTABLE := procedural.exe
 else
 LD_FLAGS := -lglfw -lGLU
-CC_FLAGS := -g 
+CC_FLAGS := -g -std=c++11
 CC := g++
 EXECUTABLE := procedural
 endif
