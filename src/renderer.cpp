@@ -1,14 +1,15 @@
 #include <memory>
-#include <GL/glfw.h>
+#include <GL/glew.h>
 
 #include "renderer.h"
+#include "camera.h"
 
-CRenderer::CRenderer(void) {
+CRenderer::CRenderer(void) : m_vertArray(0) {
 
 }
 
 CRenderer::~CRenderer(void) {
-
+	if (m_vertArray != 0) glDeleteVertexArrays(1, &m_vertArray);
 }
 
 CRenderer& CRenderer::instance(void) {
@@ -20,16 +21,14 @@ bool CRenderer::initialize(void) {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS); 
 
+	glGenVertexArrays(1, &m_vertArray);
+	glBindVertexArray(m_vertArray);
 
 	return true;
 }
 
 void CRenderer::resize(float width, float height) {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0f, (float)width / (float)height, 0.1f, 100.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	Camera.setAspect(width / height);
 }
 
 void CRenderer::render(void) {

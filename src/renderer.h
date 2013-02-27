@@ -1,6 +1,8 @@
 #ifndef _RENDERER_H_
 #define _RENDERER_H_
 
+#include <GL/glfw.h>
+
 #define Renderer CRenderer::instance()
 
 class CRenderer {
@@ -15,6 +17,7 @@ public:
 	void render(void);
 protected:
 private:
+	GLuint m_vertArray;
 };
 
 #endif
