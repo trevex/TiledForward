@@ -15,9 +15,13 @@ public:
 	bool initialize(void);
 	void resize(float width, float height);
 	void render(void);
+	void resetViewport(void);
 protected:
 private:
 	GLuint m_vertArray;
+
+	GLsizei m_width;
+	GLsizei m_height;
 };
 
 #endif

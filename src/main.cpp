@@ -11,6 +11,7 @@
 #include "geometry.h"
 #include "primitives.h"
 #include "texture.h"
+#include "fbo.h"
 
 int main( void )
 {
@@ -20,6 +21,7 @@ int main( void )
 		exit(EXIT_FAILURE);
 	}
 
+	// CUBE
 	CShader shader("shader/transform.vert", "shader/texture.frag");
 
 	CGeometry cube(*getCubeVertices(), *getCubeUVs(), *getCubeIndices());
@@ -29,12 +31,23 @@ int main( void )
 	CUniform mvp(shader.getUniform("MVP"));
 	CUniform diffuse(shader.getUniform("uDiffuse"));
 
-	// Main loop
+	// TERRAIN
+	CFBO terrain;
+	CShader simplex("shader/quad.vert", "shader/simplex.frag");
+	simplex.use();
+	terrain.bind();
+	terrain.clear();
+	terrain.fullQuad();
+	terrain.unbind();
+	terrain.mipmap();
+	CTexture terrain_tex(terrain.get());
+
+	// LOOP
 	while (App.run()) {
 		shader.use();
 		mvp.setMatrix(Camera.getMVP(cube_matrix));
 
-		cube_texture.bind(0);
+		terrain_tex.bind(0);
 		diffuse.setSamplerId(0);
 
 		cube.bind();

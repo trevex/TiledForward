@@ -7,6 +7,7 @@
 class CTexture {
 public:
 	CTexture(const std::string filepath);
+	CTexture(GLuint texture);
 	~CTexture(void);
 
 	const GLuint get(void) const;

@@ -8,8 +8,12 @@ CTexture::CTexture(const std::string filepath) : m_id(0) {
 	if (filetype == "tga") loadTGA(filepath.c_str());
 }
 
-CTexture::~CTexture(void) {
+CTexture::CTexture(GLuint texture) : m_id(texture) {
 
+}
+
+CTexture::~CTexture(void) {
+	glDeleteTextures(1, &m_id);
 }
 
 void CTexture::loadTGA(const char* filepath) {
