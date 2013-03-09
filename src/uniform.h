@@ -10,6 +10,7 @@ public:
 
 	void setMatrix(const float* matrix);
 	void setSamplerId(const GLuint textureId);
+	void setFloat(const float value);
 protected:
 private:
 	GLuint m_uniformId;

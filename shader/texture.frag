@@ -4,8 +4,8 @@ in vec2 UV;
 
 out vec3 color;
 
-uniform sampler2D uDiffuse;
+uniform sampler2D diffuse;
 
 void main(){
-	color = texture2D(uDiffuse, UV).rgb;
+	color = texture2D(diffuse, UV).rgb;
 }
