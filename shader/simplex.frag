@@ -71,6 +71,6 @@ float snoise(vec2 v) {
 }
 
 void main() {
-	float result = snoise(gl_FragCoord.xy*0.06);
+	float result = snoise(gl_FragCoord.xy*0.05);
 	color = vec4(result, result, result,1);
 }

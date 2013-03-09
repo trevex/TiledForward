@@ -5,12 +5,12 @@ ifneq "$(findstring win, $(MAKECMDGOALS))" ""
 LD_FLAGS := -static-libstdc++ -static-libgcc -static -lglew32 -lglfw -lopengl32 -lglu32
 CC_FLAGS := -DGLEW_STATIC -std=c++0x
 CC := x86_64-w64-mingw32-g++
-EXECUTABLE := procedural.exe
+EXECUTABLE := tiledforward.exe
 else
 LD_FLAGS := -lglfw -lGLU -lGLEW
 CC_FLAGS := -g -std=c++11
 CC := g++
-EXECUTABLE := procedural
+EXECUTABLE := tiledforward
 endif
 
 unix: $(EXECUTABLE)
